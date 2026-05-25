@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MolAlda Technology | Webfejlesztés</title>
+  <meta name="description" content="Profi webfejlesztés kis és közepes vállalkozásoknak. HTML, CSS, JavaScript, Node.js alapú modern weboldalak.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="logo">Mol<span>Alda</span></a>
+      <ul class="nav-links">
+        <li><a href="#portfolio">Portfólió</a></li>
+        <li><a href="#szolgaltatasok">Szolgáltatások</a></li>
+        <li><a href="#arajanlat">Árajánlat</a></li>
+        <li><a href="#kapcsolat">Kapcsolat</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menü">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#portfolio" class="mobile-link">Portfólió</a>
+      <a href="#szolgaltatasok" class="mobile-link">Szolgáltatások</a>
+      <a href="#arajanlat" class="mobile-link">Árajánlat</a>
+      <a href="#kapcsolat" class="mobile-link">Kapcsolat</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="badge">
+        <span class="dot"></span>
+        Projekteket vállalok
+      </div>
+      <h1>Weboldal,<br>ami <em>valóban</em><br>működik.</h1>
+      <p class="hero-sub">Szia! MolAlda vagyok — webfejlesztő. Csinálom a te weboldalad is: szép, gyors és modern. HTML, CSS, JavaScript és Node.js technológiákkal.</p>
+      <div class="hero-btns">
+        <a href="#arajanlat" class="btn-primary">Kérek árajánlatot</a>
+        <a href="#portfolio" class="btn-secondary">Munkáim</a>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-num">2</span>
+          <span class="stat-label">Kész projekt</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">Elégedett ügyfél</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">Node.js</span>
+          <span class="stat-label">Backend tudás</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="section portfolio-section" id="portfolio">
+    <div class="container">
+      <p class="section-label">Portfólió</p>
+      <h2 class="section-title">Korábbi munkáim</h2>
+      <div class="portfolio-grid">
+        <div class="card">
+          <div class="card-img foxg1">🧬</div>
+          <div class="card-body">
+            <p class="card-tag">Alapítványi weboldal</p>
+            <h3 class="card-title">FOXG1 Magyar Alapítvány</h3>
+            <p class="card-desc">Ritka genetikai betegségről szóló tájékoztató oldal magyar érintett családoknak. Zenelejátszó, kapcsolati űrlap, reszponzív design.</p>
+            <a href="https://foxg1.hu" target="_blank" rel="noopener" class="card-link">foxg1.hu →</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img elso">🎮</div>
+          <div class="card-body">
+            <p class="card-tag">Webalkalmazás · Node.js</p>
+            <h3 class="card-title">Első weboldalam</h3>
+            <p class="card-desc">Teljes webalkalmazás bejelentkezési rendszerrel, üzenőfallal és játék szekcióval. Node.js backend, reszponzív design.</p>
+            <a href="https://elso-weboldalam.onrender.com" target="_blank" rel="noopener" class="card-link">Megnézem →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section services-section" id="szolgaltatasok">
+    <div class="container">
+      <p class="section-label">Szolgáltatások</p>
+      <h2 class="section-title">Mit tudok csinálni neked?</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🌐</div>
+          <h3>Bemutatkozó weboldal</h3>
+          <p>Szép, gyors, mobilbarát weboldal vállalkozásodnak vagy alapítványodnak.</p>
+          <span class="price">Árajánlat alapján</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">⚙️</div>
+          <h3>Webalkalmazás</h3>
+          <p>Node.js backend, bejelentkezési rendszer, adatbázis, egyedi funkciók.</p>
+          <span class="price">Árajánlat alapján</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📱</div>
+          <h3>Reszponzív design</h3>
+          <p>Az oldalad telefonon, tableten és asztali gépen is tökéletesen néz ki.</p>
+          <span class="price">Minden projektbe benne</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🔧</div>
+          <h3>Karbantartás</h3>
+          <p>Meglévő weboldal javítása, frissítése, fejlesztése igény szerint.</p>
+          <span class="price">Árajánlat alapján</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE FORM -->
+  <section class="section quote-section" id="arajanlat">
+    <div class="container">
+      <p class="section-label">Árajánlat</p>
+      <h2 class="section-title">Meséld el a projektedet!</h2>
+      <form class="quote-form" id="quoteForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nev">Neved</label>
+            <input type="text" id="nev" name="nev" placeholder="pl. Kovács Anna" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email cím</label>
+            <input type="email" id="email" name="email" placeholder="pl. anna@gmail.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="tipus">Milyen weboldalt szeretnél?</label>
+          <select id="tipus" name="tipus" required>
+            <option value="">Válassz...</option>
+            <option value="Bemutatkozó / céges weboldal">Bemutatkozó / céges weboldal</option>
+            <option value="Webalkalmazás (bejelentkezés, adatbázis)">Webalkalmazás (bejelentkezés, adatbázis)</option>
+            <option value="Portfólió oldal">Portfólió oldal</option>
+            <option value="Egyéb">Egyéb</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="reszletek">Részletek</label>
+          <textarea id="reszletek" name="reszletek" placeholder="Meséld el, mit szeretnél! Minél több infó, annál pontosabb az árajánlat."></textarea>
+        </div>
+        <button type="submit" class="btn-submit" id="submitBtn">Árajánlatot kérek →</button>
+        <p class="form-status" id="formStatus"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact-section" id="kapcsolat">
+    <div class="container text-center">
+      <p class="section-label">Kapcsolat</p>
+      <h2 class="section-title">Írj bátran!</h2>
+      <p class="contact-sub">Kérdésed van? Szeretnél együttműködni? Keress meg!</p>
+      <div class="contact-cards">
+        <div class="contact-card">
+          <p class="contact-card-label">Email</p>
+          <p class="contact-card-val">molalda@gmail.com</p>
+        </div>
+        <div class="contact-card">
+          <p class="contact-card-label">Válaszidő</p>
+          <p class="contact-card-val">1–2 napon belül</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span class="logo">Mol<span>Alda</span></span>
+      <span class="footer-copy">© 2025 MolAlda Technology</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
