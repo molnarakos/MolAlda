@@ -1,8 +1,4 @@
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
   --black: #0d0d0d;
@@ -319,7 +315,7 @@ h1 em {
   color: var(--accent);
 }
 
-/* ====================== ÚJ: ÁRAJÁNLAT ====================== */
+/* ====================== ÁRAJÁNLAT ====================== */
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -378,6 +374,7 @@ h1 em {
 .price-sub {
   color: var(--gray);
   font-size: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .pricing-features {
@@ -390,6 +387,24 @@ h1 em {
   padding: 0.75rem 0;
   border-bottom: 1px solid var(--border);
   color: var(--black);
+}
+
+.recurring {
+  background: var(--light);
+  padding: 1rem;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+  text-align: left;
+}
+
+.recurring p {
+  margin: 0.6rem 0;
+  font-size: 1rem;
+}
+
+.monthly, .yearly {
+  color: var(--accent);
+  font-weight: 600;
 }
 
 /* EXTRAS */
@@ -425,7 +440,7 @@ h1 em {
   font-weight: 600;
 }
 
-/* QUOTE FORM (eredeti) */
+/* QUOTE FORM */
 .quote-section { background: var(--light); }
 .quote-form {
   background: var(--white);
