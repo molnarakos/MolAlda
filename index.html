@@ -40,7 +40,7 @@
         Projekteket vállalok
       </div>
       <h1>Weboldal,<br>ami <em>valóban</em><br>működik.</h1>
-      <p class="hero-sub">Kis kor, nagy ész... és persze Node.js technológia. Rögtön készül a te weboldalad is: szép, gyors és modern lesz. HTML, CSS, JavaScript és Node.js technológiákkal.</p>
+      <p class="hero-sub">Kis kor, nagy ész.. és persze Node.js technológia. Rögtön készül a te weboldalad is: szép, gyors és modern lesz. HTML, CSS, JavaScript és Node.js technológiákkal.</p>
       <div class="hero-btns">
         <a href="#arajanlat" class="btn-primary">Kérek árajánlatot</a>
         <a href="#portfolio" class="btn-secondary">Munkáim</a>
@@ -249,6 +249,37 @@
     </div>
   </footer>
 
-  <script src="app.js"></script>
+  <!-- JAVASCRIPT a form működéséhez -->
+  <script>
+    const form = document.getElementById('quoteForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const status = document.getElementById('formStatus');
+
+    form.addEventListener('submit', function() {
+      submitBtn.textContent = 'Küldés folyamatban...';
+      submitBtn.disabled = true;
+      status.textContent = '';
+      status.className = 'form-status';
+    });
+
+    // Sikeres küldés
+    form.addEventListener('formspree-success', function() {
+      status.textContent = '✅ Üzenetedet megkaptam! Hamarosan válaszolok.';
+      status.className = 'form-status success';
+      form.reset();
+      
+      submitBtn.textContent = 'Árajánlatot kérek →';
+      submitBtn.disabled = false;
+    });
+
+    // Hiba esetén
+    form.addEventListener('formspree-error', function() {
+      status.textContent = '❌ Valami hiba történt. Próbáld meg később.';
+      status.className = 'form-status error';
+      
+      submitBtn.textContent = 'Árajánlatot kérek →';
+      submitBtn.disabled = false;
+    });
+  </script>
 </body>
 </html>
