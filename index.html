@@ -40,7 +40,7 @@
         Projekteket vállalok
       </div>
       <h1>Weboldal,<br>ami <em>valóban</em><br>működik.</h1>
-      <p class="hero-sub">Szia! MolAlda vagyok — webfejlesztő. Szívesen csinálom a te weboldaladat is: modern, szép, és gyors lesz. HTML, CSS, JavaScript és Node.js technológiákkal készítem.</p>
+      <p class="hero-sub">Kis kor, nagy ész... és persze Node.js technológia. Rögtön készül a te weboldalad is: szép, gyors és modern lesz. HTML, CSS, JavaScript és Node.js technológiákkal.</p>
       <div class="hero-btns">
         <a href="#arajanlat" class="btn-primary">Kérek árajánlatot</a>
         <a href="#portfolio" class="btn-secondary">Munkáim</a>
@@ -131,7 +131,6 @@
       <h2 class="section-title">Árak & Csomagok</h2>
 
       <div class="pricing-grid">
-        <!-- Statikus -->
         <div class="pricing-card">
           <div class="pricing-header">
             <h3>Statikus Weboldal</h3>
@@ -153,7 +152,6 @@
           <a href="#quoteForm" class="btn-primary">Ajánlatot kérek</a>
         </div>
 
-        <!-- Dinamikus -->
         <div class="pricing-card popular">
           <div class="pricing-header">
             <h3>Dinamikus Weboldal</h3>
@@ -189,10 +187,10 @@
         <div class="extra-item"><strong>AI Chatbot</strong><br><span>20.000 Ft</span></div>
       </div>
 
-      <!-- Űrlap -->
+      <!-- FORMSPREE ŰRLAP -->
       <div style="margin-top: 80px;">
         <h2 class="section-title">Meséld el a projektedet!</h2>
-        <form class="quote-form" id="quoteForm">
+        <form class="quote-form" id="quoteForm" action="https://formspree.io/f/xaqkpynd" method="POST">
           <div class="form-row">
             <div class="form-group">
               <label for="nev">Neved</label>
@@ -215,7 +213,7 @@
           </div>
           <div class="form-group">
             <label for="reszletek">Részletek</label>
-            <textarea id="reszletek" name="reszletek" placeholder="Meséld el, mit szeretnél..."></textarea>
+            <textarea id="reszletek" name="reszletek" placeholder="Meséld el, mit szeretnél..." required></textarea>
           </div>
           <button type="submit" class="btn-submit" id="submitBtn">Árajánlatot kérek →</button>
           <p class="form-status" id="formStatus"></p>
