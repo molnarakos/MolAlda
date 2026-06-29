@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MolAlda Technology</title>
+  <meta name="description" content="MolAlda Technology – Webfejlesztés és robotika egy helyen.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #0d0d0d;
+      --gray: #6b6b6b;
+      --light: #f8f7f4;
+      --border: #e8e6e0;
+      --accent-web: #5b4cdb;
+      --accent-robot: #1D9E75;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: 1.25rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.4rem;
+      text-decoration: none; color: var(--black);
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--accent-web); }
+    .nav-right {
+      display: flex; gap: 1rem; align-items: center;
+    }
+    .nav-pill {
+      text-decoration: none;
+      font-size: 0.88rem; font-weight: 500;
+      padding: 0.5rem 1.1rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--gray);
+      transition: all 0.2s;
+    }
+    .nav-pill:hover { color: var(--black); border-color: var(--black); }
+    .nav-pill.robot {
+      background: #0d0d0d; color: #1D9E75;
+      border-color: #0d0d0d;
+    }
+    .nav-pill.robot:hover { background: #222; }
+
+    /* HERO */
+    .hero {
+      min-height: 88vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      max-width: 860px; margin: 0 auto;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--light); border: 1px solid var(--border);
+      border-radius: 100px; padding: 0.35rem 1rem;
+      font-size: 0.78rem; color: var(--gray); margin-bottom: 2rem;
+    }
+    .dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.6rem, 6vw, 4.8rem);
+      font-weight: 800; line-height: 1.05;
+      letter-spacing: -2px; margin-bottom: 1.25rem;
+    }
+    .hero h1 em { font-style: normal; color: var(--accent-web); }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--gray);
+      line-height: 1.7; max-width: 500px;
+      margin: 0 auto 3rem; font-weight: 300;
+    }
+
+    /* DIVISION CARDS */
+    .divisions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      width: 100%; max-width: 780px;
+      margin: 0 auto;
+    }
+    .div-card {
+      border-radius: 20px;
+      padding: 2.25rem 2rem;
+      text-decoration: none;
+      color: inherit;
+      border: 1.5px solid var(--border);
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      background: var(--white);
+    }
+    .div-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .div-card.web::before { background: linear-gradient(135deg, #f0eeff 0%, #ffffff 60%); }
+    .div-card.robot::before { background: linear-gradient(135deg, #e8f8f2 0%, #ffffff 60%); }
+    .div-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+    .div-card.web:hover { border-color: var(--accent-web); }
+    .div-card.robot:hover { border-color: var(--accent-robot); }
+    .div-card:hover::before { opacity: 1; }
+
+    .div-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.25rem; font-size: 1.4rem;
+      position: relative;
+    }
+    .div-card.web .div-icon { background: #f0eeff; }
+    .div-card.robot .div-icon { background: #e8f8f2; }
+
+    .div-label {
+      font-size: 0.7rem; font-weight: 500;
+      letter-spacing: 3px; text-transform: uppercase;
+      margin-bottom: 0.5rem; position: relative;
+    }
+    .div-card.web .div-label { color: var(--accent-web); }
+    .div-card.robot .div-label { color: var(--accent-robot); }
+
+    .div-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.35rem; font-weight: 800;
+      letter-spacing: -0.5px; margin-bottom: 0.6rem;
+      position: relative;
+    }
+    .div-desc {
+      font-size: 0.88rem; color: var(--gray);
+      line-height: 1.6; margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .div-link {
+      font-size: 0.88rem; font-weight: 500;
+      display: inline-flex; align-items: center; gap: 4px;
+      position: relative;
+    }
+    .div-card.web .div-link { color: var(--accent-web); }
+    .div-card.robot .div-link { color: var(--accent-robot); }
+
+    /* NEWS */
+    .news-section {
+      padding: 5rem 2rem;
+      background: var(--light);
+      border-top: 1px solid var(--border);
+    }
+    .news-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gray); margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 800; letter-spacing: -1px;
+      margin-bottom: 2.5rem; line-height: 1.1;
+    }
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+    .news-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.75rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .news-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,0.07); }
+    .news-tag {
+      display: inline-block;
+      font-size: 0.7rem; font-weight: 500;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 100px;
+      margin-bottom: 0.85rem;
+    }
+    .news-tag.web { background: #f0eeff; color: var(--accent-web); }
+    .news-tag.robot { background: #e8f8f2; color: var(--accent-robot); }
+    .news-tag.tech { background: var(--light); color: var(--gray); border: 1px solid var(--border); }
+    .news-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem; font-weight: 700;
+      margin-bottom: 0.5rem; line-height: 1.3;
+    }
+    .news-desc { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
+    .news-date { font-size: 0.75rem; color: var(--gray); margin-top: 1rem; }
+
+    /* ABOUT */
+    .about-section {
+      padding: 5rem 2rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+    }
+    .about-text h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800; letter-spacing: -1px;
+      margin-bottom: 1rem; line-height: 1.2;
+    }
+    .about-text p { color: var(--gray); font-size: 0.95rem; line-height: 1.75; margin-bottom: 1rem; }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .about-stat {
+      background: var(--light); border-radius: 14px;
+      padding: 1.25rem; border: 1px solid var(--border);
+    }
+    .about-stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem; font-weight: 800;
+      letter-spacing: -1px; display: block;
+    }
+    .about-stat-num.web { color: var(--accent-web); }
+    .about-stat-num.robot { color: var(--accent-robot); }
+    .about-stat-label { font-size: 0.8rem; color: var(--gray); margin-top: 0.2rem; display: block; }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 0.75rem;
+    }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.82rem; color: var(--gray); text-decoration: none; }
+    .footer-links a:hover { color: var(--black); }
+    .footer-copy { font-size: 0.8rem; color: var(--gray); }
+
+    @media (max-width: 640px) {
+      .divisions { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .nav-right .nav-pill:first-child { display: none; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">Mol<span>Alda</span> Technology</a>
+    <div class="nav-right">
+      <a href="web/" class="nav-pill">Webfejlesztés</a>
+      <a href="robotics/" class="nav-pill robot">Robotics</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">
+    <span class="dot"></span>
+    Aktívan fejlesztünk
+  </div>
+  <h1>Weboldal &<br><em>Robotika</em>,<br>egy helyen.</h1>
+  <p class="hero-sub">
+    A MolAlda Technology két dologra specializálódott: modern weboldalak fejlesztése és Arduino-alapú robotkészletek tervezése. Válaszd ki, ami érdekel!
+  </p>
+
+  <div class="divisions">
+    <a href="web/" class="div-card web">
+      <div class="div-icon">🌐</div>
+      <div class="div-label">Web · Fejlesztés</div>
+      <div class="div-title">MolAlda Web</div>
+      <div class="div-desc">Profi weboldalak és webalkalmazások kis- és középvállalkozásoknak. HTML, CSS, JavaScript, Node.js.</div>
+      <div class="div-link">Megnézem →</div>
+    </a>
+    <a href="robotics/" class="div-card robot">
+      <div class="div-icon">🤖</div>
+      <div class="div-label">Robotics · Készletek</div>
+      <div class="div-title">MolAlda Robotics</div>
+      <div class="div-desc">Havi előfizetéses Arduino robotkészletek. Minden hónapban egy új robot – összerakod, megérted, meghereled.</div>
+      <div class="div-link">Megnézem →</div>
+    </a>
+  </div>
+</div>
+
+<!-- NEWS -->
+<div class="news-section">
+  <div class="news-inner">
+    <p class="section-label">Hírek & frissítések</p>
+    <h2 class="section-title">Mi újság a MolAlda-nál?</h2>
+    <div class="news-grid">
+      <div class="news-card">
+        <span class="news-tag robot">Robotics</span>
+        <div class="news-title">Elindult a MolAlda Robotics!</div>
+        <div class="news-desc">Hamarosan elérhetők lesznek az első Arduino robotkészletek. Az 1. doboz: "Őrszem" – PIR és ultrahangos riasztóőr robot.</div>
+        <div class="news-date">2025. június</div>
+      </div>
+      <div class="news-card">
+        <span class="news-tag web">Web</span>
+        <div class="news-title">Új projekt: FOXG1 Magyar Alapítvány weboldala</div>
+        <div class="news-desc">Elkészült a foxg1.hu – tájékoztató oldal magyar érintett családoknak ritka genetikai betegségről.</div>
+        <div class="news-date">2025. május</div>
+      </div>
+      <div class="news-card">
+        <span class="news-tag tech">Tech</span>
+        <div class="news-title">MolAlda Technology – két divízió, egy csapat</div>
+        <div class="news-desc">A MolAlda Technology mostantól két területen dolgozik: webfejlesztés és robotika. Mindkettőt Ákos és Ádám vezeti.</div>
+        <div class="news-date">2025. június</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="about-section">
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="section-label">Rólunk</p>
+      <h2>Apa és fia,<br>akik építenek.</h2>
+      <p>A MolAlda Technology egy fiatal, kétfős csapat: Ákos és Ádám. Webfejlesztéssel és robotikával foglalkozunk – egymást tanítva, egymástól tanulva.</p>
+      <p>Minden projektünk valódi munkából születik: nem sablon, nem AI-generált, hanem kézzel épített, gondosan megtervezett megoldás.</p>
+    </div>
+    <div class="about-stats">
+      <div class="about-stat">
+        <span class="about-stat-num web">2</span>
+        <span class="about-stat-label">Kész webprojekt</span>
+      </div>
+      <div class="about-stat">
+        <span class="about-stat-num robot">6+</span>
+        <span class="about-stat-label">Tervezett robot</span>
+      </div>
+      <div class="about-stat">
+        <span class="about-stat-num web">100%</span>
+        <span class="about-stat-label">Elégedett ügyfél</span>
+      </div>
+      <div class="about-stat">
+        <span class="about-stat-num robot">∞</span>
+        <span class="about-stat-label">Ötlet folyamatban</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <span class="logo" style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:-0.5px;">
+      Mol<span style="color:var(--accent-web)">Alda</span> Technology
+    </span>
+    <div class="footer-links">
+      <a href="web/">Web</a>
+      <a href="robotics/">Robotics</a>
+    </div>
+    <span class="footer-copy">© 2025 MolAlda Technology · A BigMolnr csoport tagja.</span>
+  </div>
+</footer>
+
+<script>
+  // Hamburger a nav-ba ha kell mobilon
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
