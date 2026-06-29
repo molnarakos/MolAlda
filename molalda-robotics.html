@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MolAlda Robotics – Build. Hack. Learn.</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0e0e0e;
+    --dark: #111111;
+    --dark2: #1a1a1a;
+    --dark3: #242424;
+    --border: #2a2a2a;
+    --green: #1D9E75;
+    --green-dark: #0F6E56;
+    --green-dim: rgba(29,158,117,0.12);
+    --white: #f5f5f0;
+    --muted: #888780;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem;
+    height: 64px;
+    background: rgba(14,14,14,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-text { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--white); }
+  .nav-logo-sub { font-size: 11px; color: var(--green); letter-spacing: 0.1em; display: block; line-height: 1; }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--green); color: #04342C;
+    border: none; border-radius: 8px;
+    padding: 9px 20px; font-size: 14px; font-weight: 500;
+    cursor: pointer; font-family: var(--font-body);
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: #22b886; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 100px 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.4;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 100%);
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--green-dim); border: 0.5px solid var(--green);
+    border-radius: 100px; padding: 6px 16px;
+    font-size: 12px; color: var(--green); letter-spacing: 0.06em;
+    margin-bottom: 2rem; font-family: var(--font-display);
+    position: relative;
+  }
+
+  .hero-badge-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .hero h1 span { color: var(--green); }
+
+  .hero-sub {
+    font-size: 1.1rem; color: var(--muted);
+    max-width: 520px; margin: 0 auto 2.5rem;
+    position: relative;
+  }
+
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; }
+
+  .btn-primary {
+    background: var(--green); color: #04342C;
+    border: none; border-radius: 10px;
+    padding: 14px 28px; font-size: 15px; font-weight: 500;
+    cursor: pointer; font-family: var(--font-body);
+    transition: background 0.2s, transform 0.1s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { background: #22b886; transform: translateY(-1px); }
+
+  .btn-secondary {
+    background: transparent; color: var(--white);
+    border: 0.5px solid var(--border); border-radius: 10px;
+    padding: 14px 28px; font-size: 15px;
+    cursor: pointer; font-family: var(--font-body);
+    transition: border-color 0.2s, transform 0.1s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--muted); transform: translateY(-1px); }
+
+  /* ROBOT SVG HERO */
+  .hero-robot {
+    margin: 3.5rem auto 0;
+    position: relative;
+    width: 160px; height: 160px;
+  }
+
+  /* STATS */
+  .stats {
+    display: flex; justify-content: center; gap: 0;
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .stat {
+    flex: 1; max-width: 200px;
+    padding: 2rem 1.5rem; text-align: center;
+    border-right: 0.5px solid var(--border);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 2rem; font-weight: 600;
+    color: var(--white); display: block;
+  }
+  .stat-num span { color: var(--green); }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* SECTION */
+  section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+
+  .section-eyebrow {
+    font-size: 11px; letter-spacing: 0.12em; color: var(--green);
+    font-family: var(--font-display); font-weight: 500;
+    text-transform: uppercase; margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 600; letter-spacing: -0.02em;
+    line-height: 1.15; margin-bottom: 1rem;
+  }
+
+  .section-desc { color: var(--muted); max-width: 500px; font-size: 1rem; }
+
+  /* BOX CARDS */
+  .boxes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px; background: var(--border);
+    border: 0.5px solid var(--border); border-radius: 16px;
+    overflow: hidden; margin-top: 3rem;
+  }
+
+  .box-card {
+    background: var(--dark); padding: 2rem;
+    transition: background 0.2s;
+    position: relative;
+  }
+  .box-card:hover { background: var(--dark2); }
+
+  .box-num {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 500;
+    color: var(--green); letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .box-num::after {
+    content: ''; flex: 1; height: 0.5px; background: var(--green); opacity: 0.3;
+  }
+
+  .box-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem; font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .box-desc { color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 1.5rem; }
+
+  .box-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 11px; padding: 4px 10px; border-radius: 100px;
+    background: var(--dark3); border: 0.5px solid var(--border);
+    color: var(--muted);
+  }
+
+  .box-card.featured { background: var(--dark2); }
+  .box-card.featured .box-num { color: var(--green); }
+  .featured-badge {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    background: var(--green); color: #04342C;
+    font-size: 10px; font-weight: 500; letter-spacing: 0.06em;
+    padding: 3px 10px; border-radius: 100px;
+    font-family: var(--font-display);
+  }
+
+  /* HOW IT WORKS */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-top: 3rem; }
+  .step { padding: 1.5rem; background: var(--dark2); border-radius: 12px; border: 0.5px solid var(--border); }
+  .step-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--green-dim); border: 0.5px solid var(--green);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+    font-family: var(--font-display); font-weight: 600;
+    color: var(--green); font-size: 15px;
+  }
+  .step h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .step p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* PRICING */
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 3rem; }
+  .price-card {
+    background: var(--dark2); border-radius: 16px;
+    border: 0.5px solid var(--border);
+    padding: 2rem; position: relative;
+  }
+  .price-card.popular { border-color: var(--green); }
+  .popular-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--green); color: #04342C;
+    font-size: 11px; font-weight: 500; padding: 4px 16px;
+    border-radius: 100px; font-family: var(--font-display);
+    white-space: nowrap;
+  }
+  .price-name { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .price-amount {
+    font-family: var(--font-display); font-size: 2.2rem; font-weight: 600;
+    margin: 1rem 0 0.25rem;
+  }
+  .price-amount span { font-size: 1rem; color: var(--muted); font-weight: 400; }
+  .price-note { font-size: 12px; color: var(--muted); margin-bottom: 1.5rem; }
+  .price-features { list-style: none; margin-bottom: 2rem; }
+  .price-features li {
+    font-size: 14px; color: var(--muted); padding: 6px 0;
+    border-bottom: 0.5px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .price-features li:last-child { border-bottom: none; }
+  .price-features li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+
+  /* CTA SECTION */
+  .cta-section {
+    background: var(--dark2);
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+    text-align: center;
+    padding: 6rem 2rem;
+  }
+  .cta-section h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 600; letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .cta-section h2 span { color: var(--green); }
+  .cta-section p { color: var(--muted); margin-bottom: 2rem; }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 0.5px solid var(--border);
+    flex-wrap: wrap; gap: 1rem;
+  }
+  footer p { font-size: 13px; color: var(--muted); }
+  .footer-motto { font-family: var(--font-display); font-size: 12px; color: var(--green); letter-spacing: 0.1em; }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    .stats { flex-wrap: wrap; }
+    .stat { min-width: 50%; border-right: none; border-bottom: 0.5px solid var(--border); }
+    section { padding: 4rem 1.25rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-badge-dot { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="36" height="36" viewBox="0 0 120 120" aria-hidden="true">
+      <rect width="120" height="120" rx="26" fill="#111111"/>
+      <rect x="26" y="36" width="68" height="52" rx="7" fill="#1a1a1a" stroke="#1D9E75" stroke-width="2.5"/>
+      <rect x="26" y="36" width="68" height="14" rx="7" fill="#1D9E75" opacity="0.12"/>
+      <rect x="35" y="53" width="20" height="16" rx="5" fill="#1D9E75"/>
+      <rect x="65" y="53" width="20" height="16" rx="5" fill="#1D9E75"/>
+      <rect x="39" y="57" width="12" height="8" rx="3" fill="#04342C"/>
+      <rect x="69" y="57" width="12" height="8" rx="3" fill="#04342C"/>
+      <rect x="44" y="78" width="32" height="5" rx="2.5" fill="#1D9E75" opacity="0.55"/>
+      <rect x="52" y="78" width="10" height="5" fill="#1D9E75"/>
+      <rect x="55" y="24" width="10" height="14" rx="5" fill="#1D9E75"/>
+      <rect x="14" y="50" width="14" height="26" rx="5" fill="#1a1a1a" stroke="#1D9E75" stroke-width="1.5"/>
+      <rect x="18" y="55" width="6" height="4" rx="2" fill="#1D9E75" opacity="0.6"/>
+      <rect x="18" y="63" width="6" height="4" rx="2" fill="#1D9E75" opacity="0.6"/>
+      <rect x="92" y="50" width="14" height="26" rx="5" fill="#1a1a1a" stroke="#1D9E75" stroke-width="1.5"/>
+      <rect x="96" y="55" width="6" height="4" rx="2" fill="#1D9E75" opacity="0.6"/>
+      <rect x="96" y="63" width="6" height="4" rx="2" fill="#1D9E75" opacity="0.6"/>
+      <rect x="36" y="88" width="14" height="18" rx="5" fill="#1D9E75" opacity="0.85"/>
+      <rect x="70" y="88" width="14" height="18" rx="5" fill="#1D9E75" opacity="0.85"/>
+    </svg>
+    <div>
+      <span class="nav-logo-text">MolAlda</span>
+      <span class="nav-logo-sub">ROBOTICS</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#dobozok">Dobozok</a></li>
+    <li><a href="#hogyan">Hogyan működik</a></li>
+    <li><a href="#arak">Árak</a></li>
+  </ul>
+  <a href="#arak" class="nav-cta">Előfizetés</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    Minden hónapban egy új robot
+  </div>
+
+  <h1>Build.<br><span>Hack.</span><br>Learn.</h1>
+
+  <p class="hero-sub">
+    Havi előfizetéses robotkészlet – minden dobozban egy izgalmas Arduino-projekt, amit te raksz össze.
+  </p>
+
+  <div class="hero-buttons">
+    <a href="#arak" class="btn-primary">Előfizetés most</a>
+    <a href="#dobozok" class="btn-secondary">Megnézem a dobozokat</a>
+  </div>
+
+  <div class="hero-robot">
+    <svg width="160" height="160" viewBox="0 0 120 120" aria-label="MolAlda Robotics robot ikon">
+      <rect width="120" height="120" rx="26" fill="#111111" stroke="#1D9E75" stroke-width="1"/>
+      <rect x="26" y="36" width="68" height="52" rx="7" fill="#1a1a1a" stroke="#1D9E75" stroke-width="2.5"/>
+      <rect x="26" y="36" width="68" height="14" rx="7" fill="#1D9E75" opacity="0.12"/>
+      <rect x="35" y="53" width="20" height="16" rx="5" fill="#1D9E75"/>
+      <rect x="65" y="53" width="20" height="16" rx="5" fill="#1D9E75"/>
+      <rect x="39" y="57" width="12" height="8" rx="3" fill="#04342C"/>
+      <rect x="69" y="57" width="12" height="8" rx="3" fill="#04342C"/>
+      <rect x="44" y="78" width="32" height="5" rx="2.5" fill="#1D9E75" opacity="0.55"/>
+      <rect x="52" y="78" width="10" height="5" fill="#1D9E75"/>
+      <rect x="55" y="24" width="10" height="14" rx="5" fill="#1D9E75"/>
+      <rect x="14" y="50" width="14" height="26" rx="5" fill="#1a1a1a" stroke="#1D9E75" stroke-width="1.5"/>
+      <rect x="18" y="55" width="6" height="4" rx="2" fill="#1D9E75" opacity="0.6"/>
+      <rect x="18" y="63" width="6" height="4" rx="2" fill="#1D9E75" opacity="0.6"/>
+      <rect x="92" y="50" width="14" height="26" rx="5" fill="#1a1a1a" stroke="#1D9E75" stroke-width="1.5"/>
+      <rect x="96" y="55" width="6" height="4" rx="2" fill="#1D9E75" opacity="0.6"/>
+      <rect x="96" y="63" width="6" height="4" rx="2" fill="#1D9E75" opacity="0.6"/>
+      <rect x="36" y="88" width="14" height="18" rx="5" fill="#1D9E75" opacity="0.85"/>
+      <rect x="70" y="88" width="14" height="18" rx="5" fill="#1D9E75" opacity="0.85"/>
+    </svg>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <span class="stat-num"><span>12</span>+</span>
+    <div class="stat-label">különböző robot projekt</div>
+  </div>
+  <div class="stat">
+    <span class="stat-num"><span>1</span> óra</span>
+    <div class="stat-label">átlagos összerakási idő</div>
+  </div>
+  <div class="stat">
+    <span class="stat-num"><span>8</span>+</span>
+    <div class="stat-label">ajánlott életkor</div>
+  </div>
+  <div class="stat">
+    <span class="stat-num"><span>100%</span></span>
+    <div class="stat-label">Arduino alapú</div>
+  </div>
+</div>
+
+<!-- DOBOZOK -->
+<section id="dobozok">
+  <div class="section-eyebrow">A dobozok</div>
+  <h2 class="section-title">Hat hónap, hat robot</h2>
+  <p class="section-desc">Minden hónapban egy újabb kihívás – fokozódó nehézséggel, egyre látványosabb eredménnyel.</p>
+
+  <div class="boxes-grid">
+    <div class="box-card featured">
+      <span class="featured-badge">1. DOBOZ</span>
+      <div class="box-num">Doboz 01</div>
+      <div class="box-title">Őrszem</div>
+      <div class="box-desc">PIR és ultrahangos szenzorral pásztázza a teret. Ha betolakodót érzékel – riaszt.</div>
+      <div class="box-tags">
+        <span class="tag">PIR szenzor</span>
+        <span class="tag">HC-SR04</span>
+        <span class="tag">Szervó</span>
+        <span class="tag">Arduino Uno</span>
+      </div>
+    </div>
+    <div class="box-card">
+      <div class="box-num">Doboz 02</div>
+      <div class="box-title">Vonalkövető</div>
+      <div class="box-desc">IR szenzorral követi a földre rajzolt vonalat. Állítsd be a pályát és nézd ahogy végigmegy!</div>
+      <div class="box-tags">
+        <span class="tag">IR szenzor</span>
+        <span class="tag">L298N</span>
+        <span class="tag">DC motor</span>
+      </div>
+    </div>
+    <div class="box-card">
+      <div class="box-num">Doboz 03</div>
+      <div class="box-title">Bluetooth vezérlés</div>
+      <div class="box-desc">Telefonodról irányítod. Balra, jobbra, előre – te vagy a pilóta.</div>
+      <div class="box-tags">
+        <span class="tag">HC-05 Bluetooth</span>
+        <span class="tag">Mobilapp</span>
+      </div>
+    </div>
+    <div class="box-card">
+      <div class="box-num">Doboz 04</div>
+      <div class="box-title">IR torony</div>
+      <div class="box-desc">360 fokban forog, IR távirányítóval céloz. Darts kilövő mechanikával.</div>
+      <div class="box-tags">
+        <span class="tag">IR vezérlés</span>
+        <span class="tag">Szervó</span>
+        <span class="tag">Mechanika</span>
+      </div>
+    </div>
+    <div class="box-card">
+      <div class="box-num">Doboz 05</div>
+      <div class="box-title">Dominókirakó</div>
+      <div class="box-desc">Vonalat követ és közben lefekteti a dominókat. Magától megáll ha elfogyott.</div>
+      <div class="box-tags">
+        <span class="tag">IR szenzor</span>
+        <span class="tag">Szervó</span>
+        <span class="tag">Mechanika</span>
+      </div>
+    </div>
+    <div class="box-card">
+      <div class="box-num">Doboz 06</div>
+      <div class="box-title">Robotkar</div>
+      <div class="box-desc">3 tengelyes, szervóvezérelt kar. Joystickkal irányítható, tárgyakat képes megfogni.</div>
+      <div class="box-tags">
+        <span class="tag">3× szervó</span>
+        <span class="tag">Joystick</span>
+        <span class="tag">Akril váz</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="hogyan" style="background: var(--dark2); max-width: 100%; padding: 6rem 2rem;">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <div class="section-eyebrow">Hogyan működik</div>
+    <h2 class="section-title">Három lépés</h2>
+    <p class="section-desc">Egyszerű mint a Lego – csak sokkal menőbb.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-icon">01</div>
+        <h3>Megérkezik a doboz</h3>
+        <p>Minden hónap elején kiszállítjuk az új készletet. A dobozon már látod, mit fogsz építeni.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">02</div>
+        <h3>Összerakod</h3>
+        <p>Képes útmutató + QR kód a videóhoz. Átlagosan 1 óra alatt kész. Forrasztás nem kell.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">03</div>
+        <h3>Hackeld meg!</h3>
+        <p>Minden dobozban van egy "Hack it!" fejezet – ötletek, hogyan fejleszd tovább a robotot.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="arak">
+  <div class="section-eyebrow">Előfizetés</div>
+  <h2 class="section-title">Válaszd ki a csomagodat</h2>
+  <p class="section-desc">Az első dobozban mindig benne van az Arduino. Bármikor lemondható.</p>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-name">Havi</div>
+      <div class="price-amount">4 990 <span>Ft / hó</span></div>
+      <div class="price-note">Havonta számlázva</div>
+      <ul class="price-features">
+        <li>1 robot készlet havonta</li>
+        <li>Arduino Uno az 1. dobozban</li>
+        <li>Nyomtatott útmutató</li>
+        <li>QR kód a videóhoz</li>
+        <li>Ingyenes szállítás</li>
+      </ul>
+      <a href="#" class="btn-secondary" style="width:100%; text-align:center; display:block;">Kipróbálom</a>
+    </div>
+    <div class="price-card popular">
+      <div class="popular-badge">Legnépszerűbb</div>
+      <div class="price-name">Éves</div>
+      <div class="price-amount">3 990 <span>Ft / hó</span></div>
+      <div class="price-note">Egyszerre számlázva – 1 hónap ingyen</div>
+      <ul class="price-features">
+        <li>1 robot készlet havonta</li>
+        <li>Arduino Uno az 1. dobozban</li>
+        <li>Nyomtatott útmutató</li>
+        <li>QR kód a videóhoz</li>
+        <li>Ingyenes szállítás</li>
+        <li>1 hónap ajándék</li>
+      </ul>
+      <a href="#" class="btn-primary" style="width:100%; text-align:center; display:block;">Előfizetek</a>
+    </div>
+    <div class="price-card">
+      <div class="price-name">Ajándék (6 hó)</div>
+      <div class="price-amount">24 990 <span>Ft</span></div>
+      <div class="price-note">Egyszerre fizetve, ajándékutalvánnyal</div>
+      <ul class="price-features">
+        <li>6 robot készlet</li>
+        <li>Arduino Uno az 1. dobozban</li>
+        <li>Nyomtatott útmutató</li>
+        <li>QR kód a videóhoz</li>
+        <li>Ingyenes szállítás</li>
+        <li>Ajándékkártya melléklettel</li>
+      </ul>
+      <a href="#" class="btn-secondary" style="width:100%; text-align:center; display:block;">Megveszem ajándékba</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Készen állsz az<br><span>első robotodra?</span></h2>
+  <p>Csatlakozz és kezdj el építeni még ma.</p>
+  <a href="#arak" class="btn-primary">Előfizetés most</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="nav-logo" style="text-decoration:none;">
+    <svg width="28" height="28" viewBox="0 0 120 120" aria-hidden="true">
+      <rect width="120" height="120" rx="26" fill="#111111"/>
+      <rect x="26" y="36" width="68" height="52" rx="7" fill="#1a1a1a" stroke="#1D9E75" stroke-width="2.5"/>
+      <rect x="35" y="53" width="20" height="16" rx="5" fill="#1D9E75"/>
+      <rect x="65" y="53" width="20" height="16" rx="5" fill="#1D9E75"/>
+      <rect x="39" y="57" width="12" height="8" rx="3" fill="#04342C"/>
+      <rect x="69" y="57" width="12" height="8" rx="3" fill="#04342C"/>
+      <rect x="55" y="24" width="10" height="14" rx="5" fill="#1D9E75"/>
+      <rect x="36" y="88" width="14" height="18" rx="5" fill="#1D9E75" opacity="0.85"/>
+      <rect x="70" y="88" width="14" height="18" rx="5" fill="#1D9E75" opacity="0.85"/>
+    </svg>
+    <div>
+      <span class="nav-logo-text" style="font-size:15px">MolAlda Robotics</span>
+    </div>
+  </a>
+  <p>© 2025 MolAlda Robotics · molalda.hu</p>
+  <span class="footer-motto">BUILD · HACK · LEARN</span>
+</footer>
+
+</body>
+</html>
